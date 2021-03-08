@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
 
 class ThumbnailRequest {
   final String video;
-  final String thumbnailPath;
+  final String? thumbnailPath;
   final ImageFormat imageFormat;
   final int maxHeight;
   final int maxWidth;
@@ -32,13 +32,13 @@ class ThumbnailRequest {
   final int quality;
 
   const ThumbnailRequest(
-      {this.video,
-      this.thumbnailPath,
-      this.imageFormat,
-      this.maxHeight,
-      this.maxWidth,
-      this.timeMs,
-      this.quality});
+      {required this.video,
+      required this.thumbnailPath,
+      required this.imageFormat,
+      required this.maxHeight,
+      required this.maxWidth,
+      required this.timeMs,
+      required this.quality});
 }
 
 class ThumbnailResult {
@@ -46,7 +46,7 @@ class ThumbnailResult {
   final int dataSize;
   final int height;
   final int width;
-  const ThumbnailResult({this.image, this.dataSize, this.height, this.width});
+  const ThumbnailResult({required this.image, required this.dataSize, required this.height, required this.width});
 }
 
 Future<ThumbnailResult> genThumbnail(ThumbnailRequest r) async {
@@ -97,7 +97,7 @@ Future<ThumbnailResult> genThumbnail(ThumbnailRequest r) async {
 class GenThumbnailImage extends StatefulWidget {
   final ThumbnailRequest thumbnailRequest;
 
-  const GenThumbnailImage({Key key, this.thumbnailRequest}) : super(key: key);
+  const GenThumbnailImage({Key? key, required this.thumbnailRequest}) : super(key: key);
 
   @override
   _GenThumbnailImageState createState() => _GenThumbnailImageState();
@@ -178,9 +178,9 @@ class _DemoHomeState extends State<DemoHome> {
   int _sizeW = 0;
   int _timeMs = 0;
 
-  GenThumbnailImage _futreImage;
+  GenThumbnailImage? _futreImage;
 
-  String _tempDir;
+  String? _tempDir;
 
   @override
   void initState() {
@@ -270,7 +270,7 @@ class _DemoHomeState extends State<DemoHome> {
                       groupValue: _format,
                       value: ImageFormat.JPEG,
                       onChanged: (v) => setState(() {
-                        _format = v;
+                        _format = v!;
                         _editNode.unfocus();
                       }),
                     ),
@@ -284,7 +284,7 @@ class _DemoHomeState extends State<DemoHome> {
                       groupValue: _format,
                       value: ImageFormat.PNG,
                       onChanged: (v) => setState(() {
-                        _format = v;
+                        _format = v!;
                         _editNode.unfocus();
                       }),
                     ),
@@ -298,7 +298,7 @@ class _DemoHomeState extends State<DemoHome> {
                       groupValue: _format,
                       value: ImageFormat.WEBP,
                       onChanged: (v) => setState(() {
-                        _format = v;
+                        _format = v!;
                         _editNode.unfocus();
                       }),
                     ),
@@ -344,7 +344,7 @@ class _DemoHomeState extends State<DemoHome> {
                   child: ListView(
                     shrinkWrap: true,
                     children: <Widget>[
-                      (_futreImage != null) ? _futreImage : SizedBox(),
+                      (_futreImage != null) ? _futreImage! : SizedBox(),
                     ],
                   ),
                 ),
@@ -391,7 +391,7 @@ class _DemoHomeState extends State<DemoHome> {
                 File video =
                     await ImagePicker.pickVideo(source: ImageSource.gallery);
                 setState(() {
-                  _video.text = video?.path;
+                  _video.text = video.path;
                 });
               },
               child: Icon(Icons.local_movies),
